@@ -26,7 +26,7 @@ const withDB = async (operations, res) => {
     }
 };
 
-const createUser = async (uid, name, email, res) => {
+const createUser = async (uid, name, email, role, res) => {
     await withDB(async (db) => {
         const user = await db.collection('users').findOne({ uid: uid });
         if (!user) {
@@ -34,6 +34,7 @@ const createUser = async (uid, name, email, res) => {
                 uid,
                 name,
                 email,
+                role,
                 createdQuiz: [],
                 attemptedQuiz: [],
             });
@@ -67,6 +68,29 @@ const createQuiz = async (quiz, res) => {
     }
 };
 
+const submitQues = async (submittedQuestion, res) => {
+    withDB(async (db) => {
+        try {
+            const cursor = db
+                .collection('quizzes')
+                .find({ _id: new ObjectId(submittedQuestion.quizId) })
+                .project({ questions: 1 });
+
+            const quiz = await cursor.toArray();
+            const remQues = quiz[0].questions.slice(0, submittedQuestion.questions.length);
+
+            const score = Evaluate(remQues, submittedQuestion.questions);
+            console.log(score);
+            res.send({
+                score: score,
+            });
+        } catch (error) {
+            console.log('Error:', error);
+            res.status(500).json({ error });
+        }
+    });
+};
+
 const submitQuiz = async (submittedQuiz, res) => {
     withDB(async (db) => {
         try {
@@ -77,7 +101,7 @@ const submitQuiz = async (submittedQuiz, res) => {
 
             const quizData = await validationCursor.toArray();
 
-            console.log({ quizData });
+            // console.log({ quizData });
             // If the quiz is already submitted, DONOT submit it.
             if (quizData[0]) {
                 console.log('in quiz already attempted');
@@ -91,7 +115,7 @@ const submitQuiz = async (submittedQuiz, res) => {
                 .project({ questions: 1 });
 
             const quiz = await cursor.toArray();
-
+            console.log(quiz);
             console.log('in quiz store');
             const score = Evaluate(quiz[0].questions, submittedQuiz.questions);
             console.log('score : ', score);
@@ -155,4 +179,78 @@ module.exports.withDB = withDB;
 module.exports.createUser = createUser;
 module.exports.createQuiz = createQuiz;
 module.exports.submitQuiz = submitQuiz;
+module.exports.submitQues = submitQues;
 module.exports.getResponses = getResponses;
+const obj = {
+    uid: 'DEN1nd1YzLfT1YvvNMXcAVt79D12',
+    quizId: '62ad95edd6ca5e0af4d3b412',
+    questions: [
+        {
+            id: 1,
+            title: '1+1',
+            optionType: 'radio',
+            selectedOptions: ['2'],
+        },
+    ],
+};
+
+const check = {
+    uid: 'DEN1nd1YzLfT1YvvNMXcAVt79D12',
+    quizId: '62ad9cf1f4875d4b886d482f',
+    questions: [
+        {
+            id: 1,
+            title: 'hi bye',
+            optionType: 'radio',
+            selectedOptions: ['2'],
+        },
+    ],
+};
+const newobj = {
+    _id: {
+        $oid: '62ad9cf1f4875d4b886d482f',
+    },
+    title: 'new quiz',
+    uid: 'DEN1nd1YzLfT1YvvNMXcAVt79D12',
+    questions: [
+        {
+            title: 'hi bye',
+            optionType: 'radio',
+            options: [
+                {
+                    text: 'why why',
+                    isCorrect: false,
+                },
+                {
+                    text: 'naah naah',
+                    isCorrect: false,
+                },
+                {
+                    text: 'baah baah',
+                    isCorrect: true,
+                },
+            ],
+            id: 1,
+        },
+        {
+            title: 'why why',
+            optionType: 'radio',
+            options: [
+                { text: 'nhiii', isCorrect: true },
+                { text: 'why', isCorrect: false },
+                { text: 'nnn', isCorrect: false },
+            ],
+        },
+        {
+            title: 'hello hi',
+            optionType: 'radio',
+            options: [
+                { text: 'why why', isCorrect: false },
+                { text: 'nhinhi', isCorrect: true },
+                { text: 'haan nhi', isCorrect: false },
+            ],
+        },
+    ],
+    isOpen: true,
+    responses: [],
+};

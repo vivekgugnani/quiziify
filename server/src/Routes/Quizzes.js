@@ -49,6 +49,12 @@ Router.post('/submit', (req, res) => {
     DB.submitQuiz(quiz, res);
 });
 
+Router.post('/ques', (req, res) => {
+    const quiz = req.body;
+    if (!quiz) return res.status(500).json({ error: 'Incomplete Parameters' });
+    DB.submitQues(quiz, res);
+});
+
 // Create Quiz
 Router.post('/create', (req, res) => {
     const quiz = req.body;

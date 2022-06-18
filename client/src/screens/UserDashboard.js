@@ -12,6 +12,7 @@ const UserDashboard = ({ user }) => {
     const [editQuiz, setEditQuiz] = useState([]);
     const [DeleteQuiz, setDeleteQuiz] = useState([]);
     // Fetch Data from the API
+
     useEffect(() => {
         if (!user.uid) {
             setLoading(false);
@@ -103,23 +104,28 @@ const UserDashboard = ({ user }) => {
             <div className="quizzes">
                 <div className="heading">
                     <div className="line-left" />
-                    <h2>Created </h2>
+                    {user.role === 'teacher' ? <h2>Created </h2> : <h2>Quizzes</h2>}
+
                     <div className="line" />
                 </div>
                 <div className="card-holder">
-                    {createdQuizzes.map((quiz, key) => (
-                        <CreatedQuizCard
-                            key={key}
-                            index={key}
-                            setEditQuiz={setEditQuiz}
-                            title={quiz.title}
-                            code={quiz._id}
-                            responses={quiz.responses}
-                            questions={quiz.questions.length}
-                            isOpen={quiz.isOpen}
-                            setDeleteQuiz={setDeleteQuiz}
-                        />
-                    ))}
+                    {user.role === 'teacher' ? (
+                        createdQuizzes.map((quiz, key) => (
+                            <CreatedQuizCard
+                                key={key}
+                                index={key}
+                                setEditQuiz={setEditQuiz}
+                                title={quiz.title}
+                                code={quiz._id}
+                                responses={quiz.responses}
+                                questions={quiz.questions.length}
+                                isOpen={quiz.isOpen}
+                                setDeleteQuiz={setDeleteQuiz}
+                            />
+                        ))
+                    ) : (
+                        <h2>hello</h2>
+                    )}
                 </div>
             </div>
             <div className="quizzes">

@@ -9,16 +9,20 @@
 	font-family: 'Nanum Gothic', sans-serif;
 	/* background: var(--gradient); */
 }
+
 h1 {
 	font-size: 3rem;
 	font-weight: lighter;
 }
+
 h2 {
 	font-size: 2rem;
 }
+
 p {
 	font-size: 1rem;
 }
+
 .label {
 	font-size: 1rem;
 	/* padding:5px; */
@@ -27,12 +31,36 @@ p {
 .white {
 	color: var(--primary);
 }
+
 .blue {
 	color: var(--secondary);
 }
 
 .wd-200 {
 	width: 200px;
+}
+
+.add-bn {
+	text-align: center;
+	color: whitesmoke;
+	background: linear-gradient(to right, var(--secondary) -5%, var(--accent-pink) 30%, var(--accent-mustard) 100%);
+	border-radius: 7px;
+	margin: 5px;
+	border: none;
+	background-color: transparent;
+	font-size: 25px;
+	font-weight: bolder;
+	width: 100px;
+	height: 50px;
+}
+
+
+.submit {
+	display: flex;
+	width: 100%;
+	flex-direction: row-reverse;
+	font-size: 20px;
+	padding-right: 20px;
 }
 
 input[type='checkbox'],
@@ -77,20 +105,24 @@ input[type='submit'],
 
 input[type='submit'],
 .button:hover {
-	background-position: right center; /* change the direction of the change here */
+	background-position: right center;
+	/* change the direction of the change here */
 	color: #fff;
 	cursor: pointer;
 	text-decoration: none;
 }
+
 input[type='submit'],
 .button:focus {
 	outline: none;
 }
+
 input[type='submit'],
 .button:active {
 	transform: translateY(4px);
 	box-shadow: var(--dark-shadow) 2px 2px 3px;
 }
+
 .button .outlined {
 	background-image: none;
 	border: 2px solid;
@@ -106,6 +138,7 @@ input[type='submit'],
 	flex-direction: column;
 	/* width:80%; */
 }
+
 .attempQuestionCard {
 	padding: 20px;
 	box-shadow: var(--light-shadow) 1px 1px 1px 1px;
@@ -115,29 +148,32 @@ input[type='submit'],
 	flex-direction: column;
 	width: 90%;
 }
+
 .margin-top {
 	margin-top: 50px;
 	padding: 5%;
 }
+
 .response-table {
 	width: 100%;
 	border: 1px solid var(--secondary);
 }
+
 @media (min-width: 768px) {
 	input[type='submit'] {
 		width: 150px;
 		padding: 10px;
 	}
+
 	::-webkit-scrollbar {
 		width: 10px;
 	}
+
 	::-webkit-scrollbar-thumb {
-		background: linear-gradient(
-			#ffffff,
-			var(--accent-mustard),
-			var(--accent-pink),
-			var(--secondary)
-		);
+		background: linear-gradient(#ffffff,
+				var(--accent-mustard),
+				var(--accent-pink),
+				var(--secondary));
 		border-radius: 7px;
 	}
 }
