@@ -16,7 +16,6 @@ import NotFoundPage from './screens/NotFoundPage';
 import AttemptQuiz from './screens/AttemptQuiz';
 import Appbar from './components/Appbar';
 import Responses from './screens/Responses';
-import reactLoaderSpinner from 'react-loader-spinner';
 
 const App = () => {
     const [user, setUser] = useState({});
@@ -38,12 +37,6 @@ const App = () => {
                                 'Content-Type': 'application/json',
                             },
                         });
-                        // setUser({
-                        //     uid: user.uid,
-                        //     name: user.name,
-                        //     email: user.email,
-                        //     role: role,
-                        // });
 
                         console.log('posted');
                     } catch (error) {

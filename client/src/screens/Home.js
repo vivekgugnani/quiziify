@@ -27,6 +27,14 @@ const Home = ({ setUser }) => {
         cookies.set('role', 'teacher');
         console.log(role);
     };
+    useEffect(() => {
+        async function fetchData() {
+            if (await cookies.get('role')) {
+                setRole(cookies.get('role'));
+            }
+        }
+        fetchData();
+    }, [setUser, setRole]);
 
     useEffect(() => {
         // const radioButtons = document.querySelectorAll('input[name="role"]');
@@ -34,9 +42,7 @@ const Home = ({ setUser }) => {
         // console.log(teacher);
         // console.log(radioButtons);
         let isMounted = true;
-        if (cookies.get('role')) {
-            setRole(cookies.get('role'));
-        }
+
         console.log(role);
         firebase.auth().onAuthStateChanged((user) => {
             // setIsLoggedIn(!!user)
@@ -72,7 +78,7 @@ const Home = ({ setUser }) => {
                             <Col>
                                 <Row>
                                     <div id="studentid">
-                                        <input type="radio" name="role" onChange={() => roleStuChange()} defaultChecked value="student" />
+                                        <input type="radio" name="role" onChange={() => roleStuChange()} value="student" />
                                         <label>Student</label>
                                     </div>
                                 </Row>

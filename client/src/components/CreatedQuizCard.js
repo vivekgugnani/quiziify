@@ -14,23 +14,27 @@ const CreatedQuizCard = ({ title, responses, code, questions, isOpen, index, set
             <div id="horizontal-line"></div>
             <div id="row">
                 <div id="responses">
-                    <Link to={`/responses/${code}`} style={{ fontWeight: 'bold' }} className="respo">
-                        Responses : {responses}
-                    </Link>
+                    {responses && (
+                        <Link to={`/responses/${code}`} style={{ fontWeight: 'bold' }} className="respo">
+                            Responses : {responses}
+                        </Link>
+                    )}
                 </div>
                 <div id="questions">Questions : {questions}</div>
             </div>
-            <div className="bottom-bar">
-                {isOpen ? <div id="open">open</div> : <div id="closed">closed</div>}
-                <div>
-                    <IconButton onClick={() => setEditQuiz([index])} color="secondary">
-                        <EditRounded color="secondary" />
-                    </IconButton>
-                    <IconButton color="secondary" onClick={() => setDeleteQuiz([index])}>
-                        <DeleteOutline color="secondary" />
-                    </IconButton>
+            {responses && (
+                <div className="bottom-bar">
+                    {isOpen ? <div id="open">open</div> : <div id="closed">closed</div>}
+                    <div>
+                        <IconButton onClick={() => setEditQuiz([index])} color="secondary">
+                            <EditRounded color="secondary" />
+                        </IconButton>
+                        <IconButton color="secondary" onClick={() => setDeleteQuiz([index])}>
+                            <DeleteOutline color="secondary" />
+                        </IconButton>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

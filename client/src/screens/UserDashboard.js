@@ -7,6 +7,7 @@ import CreateQuiz from './CreateQuiz';
 
 const UserDashboard = ({ user }) => {
     const [createdQuizzes, setCreatedQuizzes] = useState([]);
+    const [allQuizzes, setAllQuizzes] = useState([]);
     const [attemptedQuizzes, setAttemptedQuizzes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [editQuiz, setEditQuiz] = useState([]);
@@ -18,6 +19,12 @@ const UserDashboard = ({ user }) => {
             setLoading(false);
             return;
         }
+        const fetchAllQuizzes = async () => {
+            const result = await fetch('/API/quizzes/all');
+            const quizData = await result.json();
+            console.log(quizData);
+            setAllQuizzes(quizData);
+        };
         const fetchQuizData = async () => {
             const results = await fetch(`/API/users/${user.uid}`);
             const quizData = await results.json();
@@ -25,8 +32,10 @@ const UserDashboard = ({ user }) => {
             if (quizData.attemptedQuiz) setAttemptedQuizzes(quizData.attemptedQuiz);
             setLoading(false);
         };
+        fetchAllQuizzes();
+        console.log(allQuizzes);
         if (user) fetchQuizData();
-    }, [user]);
+    }, [user, setAllQuizzes]);
 
     const editQuizHandle = async (title, questions, isOpen) => {
         if (!title) setEditQuiz([]);
@@ -109,23 +118,23 @@ const UserDashboard = ({ user }) => {
                     <div className="line" />
                 </div>
                 <div className="card-holder">
-                    {user.role === 'teacher' ? (
-                        createdQuizzes.map((quiz, key) => (
-                            <CreatedQuizCard
-                                key={key}
-                                index={key}
-                                setEditQuiz={setEditQuiz}
-                                title={quiz.title}
-                                code={quiz._id}
-                                responses={quiz.responses}
-                                questions={quiz.questions.length}
-                                isOpen={quiz.isOpen}
-                                setDeleteQuiz={setDeleteQuiz}
-                            />
-                        ))
-                    ) : (
-                        <h2>hello</h2>
-                    )}
+                    {user.role === 'teacher'
+                        ? createdQuizzes.map((quiz, key) => (
+                              <CreatedQuizCard
+                                  key={key}
+                                  index={key}
+                                  setEditQuiz={setEditQuiz}
+                                  title={quiz.title}
+                                  code={quiz._id}
+                                  responses={quiz.responses}
+                                  questions={quiz.questions.length}
+                                  isOpen={quiz.isOpen}
+                                  setDeleteQuiz={setDeleteQuiz}
+                              />
+                          ))
+                        : allQuizzes.map((quiz, key) => {
+                              return <CreatedQuizCard key={key} index={key} title={quiz.title} code={quiz._id} questions={quiz.questions.length} />;
+                          })}
                 </div>
             </div>
             <div className="quizzes">

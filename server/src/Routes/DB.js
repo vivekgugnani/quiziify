@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb');
+const Db = require('mongodb/lib/db');
 const Evaluate = require('../utils/EvaluateQuiz');
 const ObjectId = require('mongodb').ObjectId;
 const API_KEY = 'mongodb://127.0.0.1:27017/quizApp';
@@ -41,6 +42,22 @@ const createUser = async (uid, name, email, role, res) => {
             res.status(200).json({ message: 'User Created successfully.' });
         } else {
             res.status(200).json({ message: 'User Record Exist' });
+        }
+    });
+};
+
+const getAllQuizzes = async (req, res) => {
+    await withDB(async (db) => {
+        try {
+            const cursor = db.collection('quizzes').find({});
+
+            const quiz = await cursor.toArray();
+            //console.log(quiz);
+            res.status(200).json(quiz);
+        } catch (e) {
+            res.status(500).json({
+                error: e,
+            });
         }
     });
 };
@@ -181,76 +198,4 @@ module.exports.createQuiz = createQuiz;
 module.exports.submitQuiz = submitQuiz;
 module.exports.submitQues = submitQues;
 module.exports.getResponses = getResponses;
-const obj = {
-    uid: 'DEN1nd1YzLfT1YvvNMXcAVt79D12',
-    quizId: '62ad95edd6ca5e0af4d3b412',
-    questions: [
-        {
-            id: 1,
-            title: '1+1',
-            optionType: 'radio',
-            selectedOptions: ['2'],
-        },
-    ],
-};
-
-const check = {
-    uid: 'DEN1nd1YzLfT1YvvNMXcAVt79D12',
-    quizId: '62ad9cf1f4875d4b886d482f',
-    questions: [
-        {
-            id: 1,
-            title: 'hi bye',
-            optionType: 'radio',
-            selectedOptions: ['2'],
-        },
-    ],
-};
-const newobj = {
-    _id: {
-        $oid: '62ad9cf1f4875d4b886d482f',
-    },
-    title: 'new quiz',
-    uid: 'DEN1nd1YzLfT1YvvNMXcAVt79D12',
-    questions: [
-        {
-            title: 'hi bye',
-            optionType: 'radio',
-            options: [
-                {
-                    text: 'why why',
-                    isCorrect: false,
-                },
-                {
-                    text: 'naah naah',
-                    isCorrect: false,
-                },
-                {
-                    text: 'baah baah',
-                    isCorrect: true,
-                },
-            ],
-            id: 1,
-        },
-        {
-            title: 'why why',
-            optionType: 'radio',
-            options: [
-                { text: 'nhiii', isCorrect: true },
-                { text: 'why', isCorrect: false },
-                { text: 'nnn', isCorrect: false },
-            ],
-        },
-        {
-            title: 'hello hi',
-            optionType: 'radio',
-            options: [
-                { text: 'why why', isCorrect: false },
-                { text: 'nhinhi', isCorrect: true },
-                { text: 'haan nhi', isCorrect: false },
-            ],
-        },
-    ],
-    isOpen: true,
-    responses: [],
-};
+module.exports.getAllQuizzes = getAllQuizzes;

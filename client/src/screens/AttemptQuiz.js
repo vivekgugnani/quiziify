@@ -7,7 +7,6 @@ import AttemptedModal from './AttemptedModal';
 const AttemptQuiz = ({ match }) => {
     const quizCode = match.params.quizCode;
     const [marks, setMarks] = useState(0);
-    const [disable, setDisable] = useState(false);
     const [questions, setQuestions] = useState([]);
     const [attemptedQuestions, setAttemptedQuestions] = useState([]);
     const [quizTitle, setQuizTitle] = useState('');
@@ -85,7 +84,7 @@ const AttemptQuiz = ({ match }) => {
             const body = await res.json();
             console.log(body);
             setMarks(body.score);
-            setDisable(true);
+
             // console.log(att.length + ' this');
             for (let i = 0; i < att.length; i++) {
                 for (let j = 0; j < att[i].optionsLength; j++) {
@@ -134,7 +133,7 @@ const AttemptQuiz = ({ match }) => {
             <div className="loading">
                 <h1>404 Quiz Not Found!</h1>
                 <div id="logo-name">
-                    <b>Quiz</b>ify
+                    <b>Quizzy</b>Learning
                 </div>
                 <h3>
                     Go back to <Link to="/join-quiz">Join Quiz </Link>Page.
@@ -147,7 +146,7 @@ const AttemptQuiz = ({ match }) => {
             <div className="loading">
                 <h2>Quiz Access is Not Granted by the Creator. Please contact Quiz Creator.</h2>
                 <div id="logo-name">
-                    <b>Quiz</b>ify
+                    <b>Quizzy</b>Learning
                 </div>
                 <h3>
                     Go back to <Link to="/join-quiz">Join Quiz </Link>Page.

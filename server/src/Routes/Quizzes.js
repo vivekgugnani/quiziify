@@ -41,7 +41,9 @@ Router.post('/join', (req, res) => {
         }
     }, res);
 });
-
+Router.get('/all', (req, res) => {
+    DB.getAllQuizzes(req, res);
+});
 // Submit the quiz
 Router.post('/submit', (req, res) => {
     const quiz = req.body;
