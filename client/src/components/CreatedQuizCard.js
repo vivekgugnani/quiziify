@@ -14,15 +14,17 @@ const CreatedQuizCard = ({ title, responses, code, questions, isOpen, index, set
             <div id="horizontal-line"></div>
             <div id="row">
                 <div id="responses">
-                    {responses && (
+                    {responses !== undefined ? (
                         <Link to={`/responses/${code}`} style={{ fontWeight: 'bold' }} className="respo">
                             Responses : {responses}
                         </Link>
+                    ) : (
+                        <></>
                     )}
                 </div>
                 <div id="questions">Questions : {questions}</div>
             </div>
-            {responses && (
+            {responses !== undefined ? (
                 <div className="bottom-bar">
                     {isOpen ? <div id="open">open</div> : <div id="closed">closed</div>}
                     <div>
@@ -34,6 +36,8 @@ const CreatedQuizCard = ({ title, responses, code, questions, isOpen, index, set
                         </IconButton>
                     </div>
                 </div>
+            ) : (
+                <></>
             )}
         </div>
     );

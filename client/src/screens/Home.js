@@ -41,11 +41,10 @@ const Home = ({ setUser }) => {
         // const teacher = document.getElementById('#stuid').checked;
         // console.log(teacher);
         // console.log(radioButtons);
-        let isMounted = true;
 
-        console.log(role);
         firebase.auth().onAuthStateChanged((user) => {
-            // setIsLoggedIn(!!user)
+            console.log(user);
+            let isMounted = true;
             if (user && isMounted) {
                 setUser({
                     uid: firebase.auth().currentUser.uid,
@@ -59,10 +58,14 @@ const Home = ({ setUser }) => {
                 setUser({});
             }
             console.log('auth change');
-            if (isMounted) setLoading(false);
-        });
 
-        return () => (isMounted = false);
+            if (isMounted) {
+                setLoading(false);
+            }
+        });
+        // if (isMounted) {
+        //     setRole(cookies.get('role'));
+        // }
     }, [setUser, role]);
     return (
         <Container fluid>

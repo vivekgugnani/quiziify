@@ -1,4 +1,4 @@
 /client/node_modules/
-/client/src/firebase/
 server/node_modules/
 server/db-config.js
+/client/src/firebase/

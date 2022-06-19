@@ -199,3 +199,42 @@ module.exports.submitQuiz = submitQuiz;
 module.exports.submitQues = submitQues;
 module.exports.getResponses = getResponses;
 module.exports.getAllQuizzes = getAllQuizzes;
+const obj = {
+    title: 'English Test',
+    uid: '86ZiJBOeN0Q3tygDTCq6hF3GsLh1',
+    questions: [
+        {
+            title: 'Which one of the following options is the closest in meaning to the word given below? Nadir',
+            optionType: 'radio',
+            options: [
+                { text: 'Highest', isCorrect: 'false' },
+                { text: 'Lowest', isCorrect: 'true' },
+                { text: 'Medium', isCorrect: 'false' },
+                { text: 'Integration', isCorrect: 'false' },
+            ],
+            id: '1',
+        },
+        {
+            title: 'Complete the sentence: Universalism is to particularism as diffuseness is to _________________',
+            optionType: 'radio',
+            options: [
+                { text: 'specificity', isCorrect: 'true' },
+                { text: 'neutrality', isCorrect: 'false' },
+                { text: 'generality', isCorrect: 'false' },
+                { text: 'adaptation', isCorrect: 'false' },
+            ],
+            id: '2',
+        },
+        {
+            title: 'Were you a bird, you ______________ in the sky.',
+            optionType: 'radio',
+            options: [
+                { text: 'would fly', isCorrect: 'true' },
+                { text: 'shall fly', isCorrect: 'false' },
+                { text: 'shall have flown', isCorrect: 'false' },
+            ],
+            id: '3',
+        },
+    ],
+    isOpen: 'true',
+};
